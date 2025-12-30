@@ -142,3 +142,85 @@ footer {
   padding: 20px;
   color: #666;
 }
+
+.participants-section {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed #eee;
+}
+
+.participants-section h5 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.participants-list {
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #f0f0f0;
+}
+
+.participants-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.participant-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  color: #555;
+  justify-content: space-between;
+}
+
+.participant-badge {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #e8eaf6;
+  color: #3949ab;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  flex: 0 0 28px;
+}
+
+.participant-email {
+  font-size: 13px;
+  word-break: break-word;
+  flex: 1;
+  margin-left: 8px;
+  overflow-wrap: break-word;
+}
+
+.participant-remove {
+  background: transparent;
+  border: none;
+  color: #c62828;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 6px;
+  border-radius: 4px;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.participant-remove:hover {
+  background: rgba(198, 40, 40, 0.08);
+  color: #b71c1c;
+}
+
+.participant-remove:focus {
+  outline: 2px solid rgba(26,35,126,0.2);
+}
+
+.no-participants {
+  font-style: italic;
+  color: #777;
+  margin: 0;
+}
