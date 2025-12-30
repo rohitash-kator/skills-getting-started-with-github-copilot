@@ -10,8 +10,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const response = await fetch("/activities");
       const activities = await response.json();
 
-      // Clear loading message
+      // Clear loading message and previous content
       activitiesList.innerHTML = "";
+
+      // Clear activity select and add default option to avoid duplicates on refresh
+      activitySelect.innerHTML = '<option value="">-- Select an activity --</option>';
 
       // Populate activities list
       Object.entries(activities).forEach(([name, details]) => {
@@ -20,11 +23,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const spotsLeft = details.max_participants - details.participants.length;
 
+        // Build participants HTML
+        let participantsHtml = "";
+        if (details.participants && details.participants.length > 0) {
+          const items = details.participants
+            .map((p) => {
+              const initial = (p && p.charAt(0)) ? p.charAt(0).toUpperCase() : "?";
+              return `<li class="participant-item">
+                        <span class="participant-badge">${initial}</span>
+                        <span class="participant-email">${p}</span>
+                      </li>`;
+            })
+            .join("");
+          participantsHtml = `
+            <div class="participants-section">
+              <h5>Participants</h5>
+              <div class="participants-list">
+                <ul>${items}</ul>
+              </div>
+            </div>`;
+        } else {
+          participantsHtml = `
+            <div class="participants-section">
+              <h5>Participants</h5>
+              <div class="participants-list">
+                <p class="no-participants">No participants yet</p>
+              </div>
+            </div>`;
+        }
+
         activityCard.innerHTML = `
           <h4>${name}</h4>
           <p>${details.description}</p>
           <p><strong>Schedule:</strong> ${details.schedule}</p>
           <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
+          ${participantsHtml}
         `;
 
         activitiesList.appendChild(activityCard);
@@ -37,6 +70,8 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     } catch (error) {
       activitiesList.innerHTML = "<p>Failed to load activities. Please try again later.</p>";
+      // Ensure select is reset on error
+      activitySelect.innerHTML = '<option value="">-- Select an activity --</option>';
       console.error("Error fetching activities:", error);
     }
   }
